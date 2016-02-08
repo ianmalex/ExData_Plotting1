@@ -1,10 +1,14 @@
+##load file
 power <- read.csv("household_power_consumption.txt", header = TRUE, sep=";", na.strings = "?")
 power <- subset(power, subset = power$Date=="1/2/2007" | power$Date=="2/2/2007" | power$Date=="Date")
+##format date and time
 power$Date = as.Date(power$Date, "%d/%m/%Y")
 power$Time <- paste(power$Date, power$Time, sep=" ")
 power$Time <- strptime(power$Time, "%Y-%m-%d %H:%M:%S")
+##prep for four graphs
 png(file = "plot4.png", width=480, height=480)
 par(mfcol = c(2, 2), mar = c(4, 4, 2, 1), oma = c(1, 1, 2, 1))
+##create four graphs
 plot(power$Time, type="l", power$Global_active_power, ylab="Global Active Power", xlab="")
 plot(power$Time, power$Sub_metering_1, type="l", ylab="Energy sub metering", xlab="")
 lines(power$Time, power$Sub_metering_2,col="red")
